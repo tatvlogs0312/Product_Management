@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="UTF-8">
+    <title>Add Category</title>
+    <style>
+        .error {
+            color: red;
+        }
+    </style>
+</head>
+<body>
+<form th:action="@{/home/addCategory}" method="post" th:object="${category}">
+    <div>
+        <div style="display: inline-block">Nhập tên thể loại : </div>
+        <div style="display: inline-block">
+            <input type="text" th:field="*{category}"/>
+            <span th:if="${#fields.hasErrors('category')}" th:errors="*{name}"></span>
+        </div>
+    </div>
+    <div>
+        <button type="submit">Nhập</button>
+    </div>
+</form>
+<div>
+    <a th:href="@{/home}">Quay lại trang chủ </a>
+</div>
+</body>
+</html>
