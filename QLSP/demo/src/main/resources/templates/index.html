@@ -15,41 +15,58 @@
     </style>
 </head>
 <body>
-<h1>Quản lý sản phẩm</h1>
+<div class="container">
+    <h1>Quản lý sản phẩm</h1>
 
-<div class="dropdown">
-    <button type="button" class="btn btn-primary dropdown-toggle" data-bs-toggle="dropdown">
-        Thể loại
-    </button>
-    <ul class="dropdown-menu">
-        <li>
-            <a class="dropdown-item" th:href="@{/home}">Xem tất cả</a>
-        </li>
-        <li th:each="category : ${categories}">
-            <a class="dropdown-item" th:href="@{/home/category(category=${category.category})}" th:text="${category.category}"></a>
-        </li>
-    </ul>
-</div>
+    <form
+            class="d-flex"
+            th:action="@{/home/search}"
+            th:object="${searchRequest}"
+            method="get"
+    >
+        <input
+                class="form-control me-2"
+                type="text"
+                placeholder="Search"
+                th:field="*{name}"
+        />
+        <button class="btn btn-primary" type="submit">Tìm</button>
+    </form>
 
-<table border="1px">
-    <tr>
-        <th>id</th>
-        <th>name</th>
-        <th>decription</th>
-        <th></th>
-        <th></th>
-    </tr>
-    <tr th:each="product : ${products}">
-        <td th:text="${product.id_product}">1</td>
-        <td th:text="${product.name}">bút</td>
-        <td th:text="${product.description}">Mực xanh</td>
-        <td><a th:href="|/home/${product.id_product}|">Xóa</a></td>
-        <td><a th:href="|/home/editProduct/${product.id_product}|">Sửa</a></td>
-    </tr>
-</table>
-<div>
-    <a th:href="@{/home/addCategory}">Thêm loại sản phẩm </a>
-    <a th:href="@{/home/addProduct}">Thêm sản phẩm </a>
+    <div class="dropdown">
+        <button type="button" class="btn btn-primary dropdown-toggle" data-bs-toggle="dropdown">
+            Thể loại
+        </button>
+        <ul class="dropdown-menu">
+            <li>
+                <a class="dropdown-item" th:href="@{/home}">Xem tất cả</a>
+            </li>
+            <li th:each="category : ${categories}">
+                <a class="dropdown-item" th:href="@{/home/category(category=${category.category})}" th:text="${category.category}"></a>
+            </li>
+        </ul>
+    </div>
+
+    <table border="1px">
+        <tr>
+            <th>id</th>
+            <th>name</th>
+            <th>decription</th>
+            <th></th>
+            <th></th>
+        </tr>
+        <tr th:each="product : ${products}">
+            <td th:text="${product.id_product}">1</td>
+            <td th:text="${product.name}">bút</td>
+            <td th:text="${product.description}">Mực xanh</td>
+            <td><a th:href="|/home/${product.id_product}|">Xóa</a></td>
+            <td><a th:href="|/home/editProduct/${product.id_product}|">Sửa</a></td>
+        </tr>
+    </table>
+    <div>
+        <a th:href="@{/home/addCategory}">Thêm loại sản phẩm </a>
+        <a th:href="@{/home/addProduct}">Thêm sản phẩm </a>
+    </div>
 </div>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
 </body>

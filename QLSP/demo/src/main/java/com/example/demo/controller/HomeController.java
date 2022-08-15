@@ -4,6 +4,7 @@ import com.example.demo.model.Category;
 import com.example.demo.model.Product;
 import com.example.demo.request.CategoryRequest;
 import com.example.demo.request.ProductRequest;
+import com.example.demo.request.SearchRequest;
 import com.example.demo.service.CategoryService;
 import com.example.demo.service.ProductService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -27,6 +28,7 @@ public class HomeController {
     public String getAllProduct(Model model){
         model.addAttribute("categories",categoryService.getAllCategory());
         model.addAttribute("products",productService.getProduct());
+        model.addAttribute("searchRequest", new SearchRequest());
         return "index";
     }
 
@@ -41,6 +43,7 @@ public class HomeController {
     public String getProductByCategory(@RequestParam("category") String category, Model model){
         model.addAttribute("categories",categoryService.getAllCategory());
         model.addAttribute("products",productService.findByCategory(category));
+        model.addAttribute("searchRequest", new SearchRequest());
         return "index";
     }
 
@@ -96,5 +99,13 @@ public class HomeController {
         model.addAttribute("categories",categoryService.getAllCategory());
         model.addAttribute("products",productService.getProduct());
         return "redirect:/home";
+    }
+
+    @GetMapping("/search")
+    public String searchProduct(@ModelAttribute("searchRequest")SearchRequest request, Model model){
+        model.addAttribute("categories",categoryService.getAllCategory());
+        model.addAttribute("products",productService.getProductByName(request.getName()));
+        model.addAttribute("searchRequest", new SearchRequest());
+        return "index";
     }
 }

@@ -12,4 +12,8 @@ public interface ProductRepository extends JpaRepository<Product, String> {
     @Query(value = "SELECT * FROM product p INNER JOIN category c ON p.category_id = c.category_id WHERE c.category = ?1",
             nativeQuery = true)
     public List<Product> findByCategory(@Param("category") String category);
+
+    List<Product> findByNameLikeIgnoreCase(String name);
+
+    List<Product> findByName(String name);
 }

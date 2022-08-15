@@ -10,6 +10,7 @@ import com.example.demo.request.ProductRequest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
@@ -79,5 +80,16 @@ public class ProductService {
 
     public List<Product> findByCategory(String category){
         return productRepository.findByCategory(category);
+    }
+
+    public List<Product> getProductByName(String search){
+        List<Product> products = productRepository.findAll();
+        List<Product> lst = new ArrayList<>();
+        for (Product product : products) {
+            if (product.getName().toLowerCase().contains(search.toLowerCase())) {
+                lst.add(product);
+            }
+        }
+        return lst;
     }
 }
