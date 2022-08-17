@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Title</title>
+    <title>Thêm sản phẩm</title>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="stylesheet" th:href="@{https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css}">
@@ -32,29 +32,10 @@
                         <h3 class="card-title">Thêm sản phẩm</h3>
                     </div>
                     <div class="card-body">
-                        <form action="" method="post" th:object="${product}" th:action="@{/home/editProduct}">
+                        <form th:action="@{/home/addCategory}" method="post" th:object="${category}">
                             <div class="form-group">
                                 <label for="inputName">Tên sản phẩm</label>
-                                <input type="text" id="inputName" class="form-control" th:field="*{name}"/>
-                            </div>
-                            <div class="form-group">
-                                <label for="inputDescription">Mô tả sản phẩm</label>
-                                <textarea
-                                        id="inputDescription"
-                                        class="form-control"
-                                        rows="4"
-                                        th:field="*{description}"
-                                ></textarea>
-                            </div>
-                            <div class="form-group">
-                                <label for="inputStatus">Loại sản phẩm</label>
-                                <select
-                                        id="inputStatus"
-                                        class="form-control custom-select"
-                                        th:field="*{category}"
-                                >
-                                    <option th:each="category : ${categories}" th:text="${category.category}" th:value="${category.category}">1</option>
-                                </select>
+                                <input type="text" id="inputName" class="form-control" th:field="*{category}"/>
                             </div>
                             <div class="row">
                                 <div class="col-12">

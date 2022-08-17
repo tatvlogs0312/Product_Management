@@ -32,7 +32,7 @@ public class HomeController {
         return "index";
     }
 
-    @GetMapping("/{id_product}")
+    @GetMapping("/delete/{id_product}")
     public String deleteProduct(@PathVariable("id_product") String id_product){
         productService.deleteProduct(id_product);
         return "redirect:/home";
@@ -50,13 +50,13 @@ public class HomeController {
     @GetMapping("/addCategory")
     public String getFormCategory(Model model){
         model.addAttribute("category",new CategoryRequest());
-        return "addCategory";
+        return "categoryAdd";
     }
 
     @PostMapping("/addCategory")
     public String addCategory(@Valid @ModelAttribute("category")CategoryRequest request, Model model, BindingResult result){
         if(result.hasErrors()){
-            return "addCategory";
+            return "categoryAdd";
         }
         categoryService.insertCategory(request);
         model.addAttribute("categories",categoryService.getAllCategory());
@@ -68,13 +68,13 @@ public class HomeController {
     public String getFormAddProduct(Model model){
         model.addAttribute("product",new ProductRequest());
         model.addAttribute("categories",categoryService.getAllCategory());
-        return "addProduct";
+        return "productAdd";
     }
 
     @PostMapping("/addProduct")
     public String addProduct(@Valid @ModelAttribute("product")ProductRequest request, Model model, BindingResult result){
         if(result.hasErrors()){
-            return "addProduct";
+            return "productAdd";
         }
         productService.insertProduct(request);
         model.addAttribute("categories",categoryService.getAllCategory());
@@ -107,5 +107,10 @@ public class HomeController {
         model.addAttribute("products",productService.getProductByName(request.getName()));
         model.addAttribute("searchRequest", new SearchRequest());
         return "index";
+    }
+
+    @GetMapping("/table")
+    public String getTable(){
+        return "table";
     }
 }

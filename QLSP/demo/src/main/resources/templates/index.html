@@ -1,18 +1,20 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.3.1/dist/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
-    <meta charset="UTF-8">
-    <title>Title</title>
-    <style>
-      th,
-      td {
-        padding: 10px;
-      }
-      table{
-        margin-top: 30px;
-      }
-    </style>
+    <title>Home</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" th:href="@{https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css}">
+    <script th:src="@{https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js}"></script>
+    <script th:src="@{https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js}"></script>
+    <script th:src="@{https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js}"></script>
+
+    <script th:src="@{https://cdn.datatables.net/1.10.20/js/jquery.dataTables.min.js}"></script>
+    <script th:src="@{https://cdn.datatables.net/1.10.20/js/dataTables.bootstrap4.min.js}"></script>
+    <script th:src="@{https://cdn.datatables.net/1.10.20/css/dataTables.bootstrap4.min.css}"></script>
+
+    <link th:href="@{https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css}" rel="stylesheet">
+    <script th:src="@{https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js}"></script>
 </head>
 <body>
 <div class="container">
@@ -33,6 +35,8 @@
         <button class="btn btn-primary" type="submit">Tìm</button>
     </form>
 
+    <br>
+
     <div class="dropdown">
         <button type="button" class="btn btn-primary dropdown-toggle" data-bs-toggle="dropdown">
             Thể loại
@@ -47,27 +51,54 @@
         </ul>
     </div>
 
-    <table border="1px">
-        <tr>
-            <th>id</th>
-            <th>name</th>
-            <th>decription</th>
-            <th></th>
-            <th></th>
-        </tr>
-        <tr th:each="product : ${products}">
-            <td th:text="${product.id_product}">1</td>
-            <td th:text="${product.name}">bút</td>
-            <td th:text="${product.description}">Mực xanh</td>
-            <td><a th:href="|/home/${product.id_product}|">Xóa</a></td>
-            <td><a th:href="|/home/editProduct/${product.id_product}|">Sửa</a></td>
-        </tr>
-    </table>
+    <br>
+
     <div>
-        <a th:href="@{/home/addCategory}">Thêm loại sản phẩm </a>
-        <a th:href="@{/home/addProduct}">Thêm sản phẩm </a>
+        <table id="example" class="table table-striped table-bordered" style="width:100%">
+            <thead>
+            <tr>
+                <th>id</th>
+                <th>name</th>
+                <th>decription</th>
+                <th></th>
+<!--                <th></th>-->
+            </tr>
+            </thead>
+            <tbody>
+            <tr th:each="product : ${products}">
+                <td th:text="${product.id_product}">1</td>
+                <td th:text="${product.name}">bút</td>
+                <td th:text="${product.description}">Mực xanh</td>
+<!--                <td><a th:href="|/home/${product.id_product}|">Xóa</a></td>-->
+<!--                <td><a th:href="|/home/editProduct/${product.id_product}|">Sửa</a></td>-->
+                <td class="project-actions text-right">
+                    <a class="btn btn-info btn-sm" a th:href="|/home/editProduct/${product.id_product}|">
+                        <i class="fas fa-pencil-alt">
+                        </i>
+                        Edit
+                    </a>
+                    <a class="btn btn-danger btn-sm" th:href="|/home/delete/${product.id_product}|">
+                        <i class="fas fa-trash">
+                        </i>
+                        Delete
+                    </a>
+                </td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+
+    <br>
+
+    <div>
+        <div style="width:200px; height:60px">
+            <a th:href="@{/home/addProduct}" class="btn btn-block btn-outline-primary" >Thêm sản phẩm </a>
+        </div>
+        <div style="width:200px; height:60px">
+            <a th:href="@{/home/addCategory}" class="btn btn-block btn-outline-primary" >Thêm loại sản phẩm </a>
+        </div>
     </div>
 </div>
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
+<script th:src="@{/main.js}"></script>
 </body>
 </html>
