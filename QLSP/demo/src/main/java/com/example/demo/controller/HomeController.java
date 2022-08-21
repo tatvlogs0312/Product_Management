@@ -29,6 +29,8 @@ public class HomeController {
         model.addAttribute("categories",categoryService.getAllCategory());
         model.addAttribute("products",productService.getProduct());
         model.addAttribute("searchRequest", new SearchRequest());
+        model.addAttribute("productRequest", new ProductRequest());
+        model.addAttribute("categoryRequest", new CategoryRequest());
         return "index";
     }
 
@@ -44,6 +46,7 @@ public class HomeController {
         model.addAttribute("categories",categoryService.getAllCategory());
         model.addAttribute("products",productService.findByCategory(category));
         model.addAttribute("searchRequest", new SearchRequest());
+        model.addAttribute("categoryRequest", new CategoryRequest());
         return "index";
     }
 
@@ -85,19 +88,20 @@ public class HomeController {
     @GetMapping("/editProduct/{id}")
     public String getFormEditProduct(Model model, @PathVariable("id") String id){
         Product product = productService.getProductById(id).get();
-        model.addAttribute("product", product);
+        ProductRequest request = new ProductRequest(product.getId_product(),
+                product.getName(),product.getDescription(),product.getCategory().getCategory());
+        model.addAttribute("product", request);
         model.addAttribute("categories",categoryService.getAllCategory());
         return "editProduct";
     }
 
-    @PostMapping("/editProduct/{id}")
+    @PostMapping("/editProduct")
     public String editProduct(@Valid @ModelAttribute("product")ProductRequest request, Model model, BindingResult result){
         if(result.hasErrors()){
             return "editProduct";
         }
         productService.updateProduct(request);
         model.addAttribute("categories",categoryService.getAllCategory());
-        model.addAttribute("products",productService.getProduct());
         return "redirect:/home";
     }
 
@@ -106,6 +110,7 @@ public class HomeController {
         model.addAttribute("categories",categoryService.getAllCategory());
         model.addAttribute("products",productService.getProductByName(request.getName()));
         model.addAttribute("searchRequest", new SearchRequest());
+        model.addAttribute("categoryRequest", new CategoryRequest());
         return "index";
     }
 
