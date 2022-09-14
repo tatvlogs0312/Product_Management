@@ -11,6 +11,11 @@
             th:href="@{https://cdn.jsdelivr.net/npm/admin-lte@3.1/dist/css/adminlte.min.css}"
     />
     <script th:src="@{https://cdn.jsdelivr.net/npm/admin-lte@3.1/dist/js/adminlte.min.js}"></script>
+    <style>
+        .error {
+            color: red;
+        }
+    </style>
 </head>
 <body>
 <div style="margin-top: 50px;">
@@ -26,6 +31,7 @@
                             <div class="form-group">
                                 <label for="inputName">Tên sản phẩm</label>
                                 <input type="text" id="inputName" class="form-control" th:field="*{category}"/>
+                                <p th:if="${#fields.hasErrors('category')}" th:errorclass="error" th:errors="*{category}" />
                             </div>
                             <div class="row">
                                 <div class="col-12">

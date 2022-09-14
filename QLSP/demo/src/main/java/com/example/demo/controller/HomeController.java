@@ -11,6 +11,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
@@ -57,7 +58,7 @@ public class HomeController {
     }
 
     @PostMapping("/addCategory")
-    public String addCategory(@Valid @ModelAttribute("category")CategoryRequest request, Model model, BindingResult result){
+    public String addCategory(@Valid @ModelAttribute("category")CategoryRequest request, BindingResult result, Model model){
         if(result.hasErrors()){
             return "categoryAdd";
         }
@@ -74,14 +75,15 @@ public class HomeController {
         return "productAdd";
     }
 
+
     @PostMapping("/addProduct")
-    public String addProduct(@Valid @ModelAttribute("product")ProductRequest request, Model model, BindingResult result){
+    public String addProduct(@Valid @ModelAttribute("product") ProductRequest request , BindingResult result , Model model){
         if(result.hasErrors()){
+            model.addAttribute("categories",categoryService.getAllCategory());
             return "productAdd";
         }
         productService.insertProduct(request);
         model.addAttribute("categories",categoryService.getAllCategory());
-        model.addAttribute("products",productService.getProduct());
         return "redirect:/home";
     }
 
@@ -96,8 +98,9 @@ public class HomeController {
     }
 
     @PostMapping("/editProduct")
-    public String editProduct(@Valid @ModelAttribute("product")ProductRequest request, Model model, BindingResult result){
+    public String editProduct(@Valid @ModelAttribute("product")ProductRequest request, BindingResult result, Model model){
         if(result.hasErrors()){
+            model.addAttribute("categories",categoryService.getAllCategory());
             return "editProduct";
         }
         productService.updateProduct(request);

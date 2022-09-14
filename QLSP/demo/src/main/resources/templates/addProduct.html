@@ -12,16 +12,12 @@
             <label for="exampleFormControlInput1">Tên sản phẩm</label>
             <input type="text" class="form-control" id="exampleFormControlInput1"
                    placeholder="Tên sản phẩm" th:field="*{name}">
-            <ul>
-                <li th:each="err : ${#fields.errors('name')}" th:text="${err}" class="error"></li>
-            </ul>
+            <p th:if="${#fields.hasErrors('name')}" th:errorclass="error" th:errors="*{name}" />
         </div>
         <div class="form-group">
             <label for="exampleFormControlTextarea1">Mô tả sản phẩm</label>
             <textarea class="form-control" id="exampleFormControlTextarea1" rows="3" th:field="*{description}"></textarea>
-            <ul>
-                <li th:each="err : ${#fields.errors('description')}" th:text="${err}" class="error"></li>
-            </ul>
+            <p th:if="${#fields.hasErrors('description')}" th:errorclass="error" th:errors="*{description}" />
         </div>
         <div class="form-group">
             <label for="exampleFormControlSelect1">Loại sản phẩm</label>

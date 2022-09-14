@@ -5,7 +5,9 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.NotNull;
+
 
 @AllArgsConstructor
 @NoArgsConstructor
@@ -13,10 +15,10 @@ import javax.validation.constraints.NotBlank;
 public class ProductRequest {
     private String id;
 
-    @NotBlank
+    @NotEmpty(message = "Không bỏ trống ô này")
     private String name;
 
-    @NotBlank
+    @NotEmpty(message = "Không bỏ trống ô này")
     private String description;
 
     private String category;
