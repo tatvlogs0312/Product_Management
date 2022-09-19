@@ -45,7 +45,9 @@
                             <div class="form-group">
                                 <label for="inputName">Tên sản phẩm</label>
                                 <input type="text" id="inputName" class="form-control" th:field="*{name}"/>
-                                <p th:if="${#fields.hasErrors('name')}" th:errorclass="error" th:errors="*{name}" />
+                                <ul>
+                                    <li th:each="err : ${#fields.errors('name')}" th:text="${err}" class="error"></li>
+                                </ul>
                             </div>
                             <div class="form-group">
                                 <label for="inputDescription">Mô tả sản phẩm</label>
@@ -55,7 +57,9 @@
                                         rows="4"
                                         th:field="*{description}"
                                 ></textarea>
-                                <p th:if="${#fields.hasErrors('description')}" th:errorclass="error" th:errors="*{description}" />
+                                <ul>
+                                    <li th:each="err : ${#fields.errors('description')}" th:text="${err}" class="error"></li>
+                                </ul>
                             </div>
                             <div class="form-group">
                                 <label for="inputStatus">Loại sản phẩm</label>
