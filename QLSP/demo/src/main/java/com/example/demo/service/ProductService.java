@@ -4,10 +4,13 @@ import com.example.demo.exception.BadRequestException;
 import com.example.demo.exception.NotfoundException;
 import com.example.demo.model.Category;
 import com.example.demo.model.Product;
+import com.example.demo.model.SearchCriteria;
 import com.example.demo.repository.CategoryRepository;
 import com.example.demo.repository.ProductRepository;
+import com.example.demo.repository.ProductSpecification;
 import com.example.demo.request.ProductRequest;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -79,17 +82,17 @@ public class ProductService {
     }
 
     public List<Product> findByCategory(String category){
-        return productRepository.findByCategory(category);
+//        return productRepository.findByCategory(category);
+        ProductSpecification spec1 = new ProductSpecification(new SearchCriteria("category",":",category));
+        return productRepository.findAll(spec1);
     }
 
     public List<Product> getProductByName(String search){
-        List<Product> products = productRepository.findAll();
-        List<Product> lst = new ArrayList<>();
-        for (Product product : products) {
-            if (product.getName().toLowerCase().contains(search.toLowerCase())) {
-                lst.add(product);
-            }
-        }
-        return lst;
+
+        //return productRepository.findByName(search);
+
+        ProductSpecification spec1 = new ProductSpecification(new SearchCriteria("name",":",search));
+        return productRepository.findAll(Specification.where(spec1));
+
     }
 }

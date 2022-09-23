@@ -48,6 +48,7 @@ public class HomeController {
         model.addAttribute("products",productService.findByCategory(category));
         model.addAttribute("searchRequest", new SearchRequest());
         model.addAttribute("categoryRequest", new CategoryRequest());
+        model.addAttribute("productRequest",new ProductRequest());
         return "index";
     }
 
@@ -114,8 +115,10 @@ public class HomeController {
         model.addAttribute("products",productService.getProductByName(request.getName()));
         model.addAttribute("searchRequest", new SearchRequest());
         model.addAttribute("categoryRequest", new CategoryRequest());
+        model.addAttribute("productRequest",new ProductRequest());
         return "index";
     }
+
 
     @GetMapping("/table")
     public String getTable(){
