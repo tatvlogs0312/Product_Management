@@ -119,9 +119,4 @@ public class HomeController {
         return "index";
     }
 
-
-    @GetMapping("/table")
-    public String getTable(){
-        return "table";
-    }
 }

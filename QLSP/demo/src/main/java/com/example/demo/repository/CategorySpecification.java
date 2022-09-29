@@ -23,7 +23,7 @@ public class CategorySpecification implements Specification<Category> {
 
     @Override
     public Predicate toPredicate(Root<Category> root, CriteriaQuery<?> query, CriteriaBuilder criteriaBuilder) {
-        Join<Category, Product> categoryProductJoin = root.join("products");
+        Join<Product, Category> categoryProductJoin = root.join("products", JoinType.RIGHT);
         if (criteria.getOperation().equalsIgnoreCase(">")) {
             return criteriaBuilder.greaterThanOrEqualTo(categoryProductJoin.get(criteria.getKey()),
                     criteria.getValue().toString());

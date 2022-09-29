@@ -18,6 +18,9 @@ import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
 
+import static com.example.demo.repository.Specitication.getNameProduct;
+import static com.example.demo.repository.Specitication.getProductByCategory;
+
 @Service
 public class ProductService {
     @Autowired private ProductRepository productRepository;
@@ -83,15 +86,19 @@ public class ProductService {
 
     public List<Product> findByCategory(String category){
 //        return productRepository.findByCategory(category);
-        ProductSpecification spec1 = new ProductSpecification(new SearchCriteria("category",":",category));
-        return productRepository.findAll(spec1);
+//        Specification<Product> spec1 = new ProductSpecification(new SearchCriteria("category",":",category));
+
+        Specification<Product> spec1 = getProductByCategory(category);
+        return productRepository.findAll(Specification.where(spec1));
     }
 
     public List<Product> getProductByName(String search){
 
-        //return productRepository.findByName(search);
+//        return productRepository.findByName(search);
 
-        ProductSpecification spec1 = new ProductSpecification(new SearchCriteria("name",":",search));
+      Specification<Product> spec1 = new ProductSpecification(new SearchCriteria("name",":",search));
+
+//        Specification<Product> spec1 = getNameProduct(search);
         return productRepository.findAll(Specification.where(spec1));
 
     }

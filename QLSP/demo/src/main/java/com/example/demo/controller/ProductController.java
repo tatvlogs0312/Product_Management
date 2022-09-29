@@ -16,7 +16,7 @@ import java.util.List;
 import java.util.Optional;
 
 @RestController
-@RequestMapping("/api")
+@RequestMapping("/api/v1/product")
 public class ProductController {
 
     @Autowired
@@ -25,13 +25,13 @@ public class ProductController {
     @Autowired
     private CategoryService categoryService;
 
-    @GetMapping("/product")
+    @GetMapping()
     public ResponseEntity<?> getAllProduct() {
         List<Product> products = productService.getProduct();
         return ResponseEntity.ok(products);
     }
 
-    @GetMapping("/product/{id}")
+    @GetMapping("/{id}")
     public Product getProductById(@PathVariable String id) {
         Optional<Product> product = productService.getProductById(id);
         if (product.isPresent()) {
@@ -40,19 +40,20 @@ public class ProductController {
         throw new NotfoundException("Không có sản phẩm");
     }
 
-    @PostMapping("/product")
+
+    @PostMapping()
     public ResponseEntity<Product> insertProduct(@RequestBody ProductRequest productRequest) {
         Product newProduct = productService.insertProduct(productRequest);
         return ResponseEntity.ok(newProduct);
     }
 
-    @DeleteMapping("/product/{id}")
+    @DeleteMapping("/{id}")
     public ResponseEntity<Product> deleteProduct(@PathVariable String id) {
         productService.deleteProduct(id);
         return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
 
-    @PutMapping("/product")
+    @PutMapping()
     public ResponseEntity<Product> updateProduct(@RequestBody ProductRequest productRequest) {
         Product product = productService.updateProduct(productRequest);
         return ResponseEntity.ok(product);

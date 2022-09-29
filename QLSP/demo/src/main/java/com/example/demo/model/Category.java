@@ -21,11 +21,12 @@ public class Category {
 
     @OneToMany(
             mappedBy = "category",
-            cascade = CascadeType.ALL,orphanRemoval = false)
-    @JsonIgnore
+            cascade = CascadeType.ALL,
+            orphanRemoval = false,
+            fetch = FetchType.LAZY)
     private List<Product> products;
 
-    public Category(String category){
+    public Category(String category) {
         this.category_id = UUID.randomUUID().toString();
         this.category = category;
     }

@@ -15,6 +15,8 @@ import org.springframework.stereotype.Service;
 import java.util.List;
 import java.util.Optional;
 
+import static com.example.demo.repository.Specitication.getCategoryByProductID;
+
 @Service
 public class CategoryService {
     @Autowired
@@ -43,7 +45,9 @@ public class CategoryService {
 //            throw new BadRequestException("Thể loại không tồn tại");
 //        }
 //        return category.get();
-        CategorySpecification spec1 = new CategorySpecification(new SearchCriteria("id_product",":",id));
+//        Specification<Category> spec1 = new CategorySpecification(new SearchCriteria("id_product",":",id));
+
+        Specification<Category> spec1 = getCategoryByProductID(id);
         List<Category> categories = categoryRepository.findAll((Sort) Specification.where(spec1));
 
         return categories.get(0);
