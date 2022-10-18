@@ -2,25 +2,26 @@ package com.example.demo.service;
 
 import com.example.demo.exception.BadRequestException;
 import com.example.demo.model.Category;
-import com.example.demo.model.SearchCriteria;
 import com.example.demo.repository.CategoryRepository;
-import com.example.demo.repository.CategorySpecification;
 import com.example.demo.request.CategoryRequest;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import org.springframework.data.domain.Sort;
+
+import com.example.demo.repository.PCSpecification;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.Optional;
 
-import static com.example.demo.repository.Specitication.getCategoryByProductID;
-
 @Service
 public class CategoryService {
     @Autowired
     private CategoryRepository categoryRepository;
+
+    @Autowired
+    private PCSpecification specification;
 
     public void insertCategory(CategoryRequest request) {
         if(request.getCategory().equals("")){
@@ -47,7 +48,7 @@ public class CategoryService {
 //        return category.get();
 //        Specification<Category> spec1 = new CategorySpecification(new SearchCriteria("id_product",":",id));
 
-        Specification<Category> spec1 = getCategoryByProductID(id);
+        Specification<Category> spec1 = specification.getCategoryByProductID(id);
         List<Category> categories = categoryRepository.findAll((Sort) Specification.where(spec1));
 
         return categories.get(0);

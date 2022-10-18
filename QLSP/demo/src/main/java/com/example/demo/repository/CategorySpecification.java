@@ -1,5 +1,6 @@
 package com.example.demo.repository;
 
+import com.example.demo.metamodel.Category_;
 import com.example.demo.model.Category;
 import com.example.demo.model.Product;
 import com.example.demo.model.SearchCriteria;
@@ -23,7 +24,7 @@ public class CategorySpecification implements Specification<Category> {
 
     @Override
     public Predicate toPredicate(Root<Category> root, CriteriaQuery<?> query, CriteriaBuilder criteriaBuilder) {
-        Join<Product, Category> categoryProductJoin = root.join("products", JoinType.RIGHT);
+        Join<Product, Category> categoryProductJoin = root.join(Category_.PRODUCTS, JoinType.LEFT);
         if (criteria.getOperation().equalsIgnoreCase(">")) {
             return criteriaBuilder.greaterThanOrEqualTo(categoryProductJoin.get(criteria.getKey()),
                     criteria.getValue().toString());

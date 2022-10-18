@@ -7,25 +7,24 @@ import com.example.demo.model.Product;
 import com.example.demo.model.SearchCriteria;
 import com.example.demo.repository.CategoryRepository;
 import com.example.demo.repository.ProductRepository;
+import com.example.demo.repository.PCSpecification;
 import com.example.demo.repository.ProductSpecification;
 import com.example.demo.request.ProductRequest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
-
-import static com.example.demo.repository.Specitication.getNameProduct;
-import static com.example.demo.repository.Specitication.getProductByCategory;
 
 @Service
 public class ProductService {
     @Autowired private ProductRepository productRepository;
 
     @Autowired private CategoryRepository categoryRepository;
+
+    @Autowired private PCSpecification PCSpecification;
 
     public List<Product> getProduct(){
         return productRepository.findAll();
@@ -86,19 +85,15 @@ public class ProductService {
 
     public List<Product> findByCategory(String category){
 //        return productRepository.findByCategory(category);
-//        Specification<Product> spec1 = new ProductSpecification(new SearchCriteria("category",":",category));
-
-        Specification<Product> spec1 = getProductByCategory(category);
+        Specification<Product> spec1 = new ProductSpecification(new SearchCriteria("category",":",category));
+//        Specification<Product> spec1 = PCSpecification.getProductByCategory(category);
         return productRepository.findAll(Specification.where(spec1));
     }
 
     public List<Product> getProductByName(String search){
-
 //        return productRepository.findByName(search);
-
       Specification<Product> spec1 = new ProductSpecification(new SearchCriteria("name",":",search));
-
-//        Specification<Product> spec1 = getNameProduct(search);
+//        Specification<Product> spec1 = PCSpecification.getNameProduct(search);
         return productRepository.findAll(Specification.where(spec1));
 
     }
